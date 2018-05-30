@@ -1,0 +1,7 @@
+{
+    "name": "X11COIN",
+    "symbol": "XC",
+    "algorithm": "x11",
+    "txfee": 0.000005
+}
+
