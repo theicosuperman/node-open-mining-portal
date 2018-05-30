@@ -6,3 +6,4 @@ pool_configs/*.json
 !pool_configs/vertcoin_example.json
 logs/
 !.gitkeep
+server.log
