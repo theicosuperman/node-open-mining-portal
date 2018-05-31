@@ -254,7 +254,13 @@ module.exports = function (portalConfig, poolConfigs) {
                 ['hgetall', ':stats'],
                 ['scard', ':blocksPending'],
                 ['scard', ':blocksConfirmed'],
-                ['scard', ':blocksOrphaned']
+                ['scard', ':blocksOrphaned'],
+								['smembers', ':blocksPending'],
+							  ['smembers', ':blocksConfirmed'],
+				        ['hgetall', ':shares:roundCurrent'],
+                ['hgetall', ':blocksPendingConfirms'],
+                ['zrange', ':payments', -100, -1],
+                ['hgetall', ':shares:timesCurrent']
 
             ];
 
@@ -279,25 +285,64 @@ module.exports = function (portalConfig, poolConfigs) {
 
                     for (var i = 0; i < replies.length; i += commandsPerCoin) {
                         var coinName = client.coins[i / commandsPerCoin | 0];
-
+												//do we need it at all?
+												var marketStats = {};
+                        if (replies[i + 2]) {
+                            if (replies[i + 2].coinmarketcap) {
+                                marketStats = replies[i + 2] ? (JSON.parse(replies[i + 2].coinmarketcap)[0] || 0) : 0;
+                            }
+                        }
                         var coinStats = {
                             name: coinName,
                             symbol: poolConfigs[coinName].coin.symbol.toUpperCase(),
                             algorithm: poolConfigs[coinName].coin.algorithm,
                             hashrates: replies[i + 1],
                             poolStats: {
-                                validShares: replies[i + 2] ? (replies[i + 2].validShares || 0) : 0,
-                                validBlocks: replies[i + 2] ? (replies[i + 2].validBlocks || 0) : 0,
-                                invalidShares: replies[i + 2] ? (replies[i + 2].invalidShares || 0) : 0,
-                                totalPaid: replies[i + 2] ? (replies[i + 2].totalPaid || 0) : 0
+														validShares: replies[i + 2] ? (replies[i + 2].validShares || 0) : 0,
+                            validBlocks: replies[i + 2] ? (replies[i + 2].validBlocks || 0) : 0,
+                            invalidShares: replies[i + 2] ? (replies[i + 2].invalidShares || 0) : 0,
+                            totalPaid: replies[i + 2] ? (replies[i + 2].totalPaid || 0) : 0,
+														networkBlocks: replies[i + 2] ? (replies[i + 2].networkBlocks || 0) : 0
+														//networkSols: replies[i + 2] ? (replies[i + 2].networkSols || 0) : 0, 
+														//networkSolsString: getReadableNetworkHashRateString(replies[i + 2] ? (replies[i + 2].networkSols || 0) : 0), 
+														//networkDiff: replies[i + 2] ? (replies[i + 2].networkDiff || 0) : 0,
+													//	networkConnections: replies[i + 2] ? (replies[i + 2].networkConnections || 0) : 0,
+                           // networkVersion: replies[i + 2] ? (replies[i + 2].networkSubVersion || 0) : 0,
+                          //  networkProtocolVersion: replies[i + 2] ? (replies[i + 2].networkProtocolVersion || 0) : 0
                             },
-
+														marketStats: marketStats,
+                            /* block stat counts */
                             blocks: {
                                 pending: replies[i + 3],
                                 confirmed: replies[i + 4],
                                 orphaned: replies[i + 5]
-                           }
-                        };
+                            },
+                            /* show all pending blocks */
+														pending: {
+														blocks: replies[i + 6].sort(sortBlocks),
+                            confirms: (replies[i + 9] || {})
+														},
+                            /* show last 50 found blocks */
+													confirmed: {
+													blocks: replies[i + 7].sort(sortBlocks).slice(0,50)
+													},
+                            payments: [],
+													currentRoundShares: (replies[i + 8] || {}),
+                            currentRoundTimes: (replies[i + 11] || {}),
+                            maxRoundTime: 0,
+                            shareCount: 0
+												};
+												for(var j = replies[i + 10].length; j > 0; j--){
+                            var jsonObj;
+                            try {
+                                jsonObj = JSON.parse(replies[i + 10][j-1]);
+                            } catch(e) {
+                                jsonObj = null;
+                            }
+                            if (jsonObj !== null) { 
+                                coinStats.payments.push(jsonObj);
+                            }
+                        }
                         allCoinStats[coinStats.name] = (coinStats);
                     }
 
@@ -392,10 +437,10 @@ module.exports = function (portalConfig, poolConfigs) {
                 var _maxTimeShare = parseFloat(0);
 								
 								for (var worker in coinStats.currentRoundShares) {
-                    var miner = worker.split(".")[0];
+                  /*  var miner = worker.split(".")[0];
                     if (miner in coinStats.miners) {
                         coinStats.miners[miner].currRoundShares += parseFloat(coinStats.currentRoundShares[worker]);
-                    }
+                    }*/
                     if (worker in coinStats.workers) {
                         coinStats.workers[worker].currRoundShares += parseFloat(coinStats.currentRoundShares[worker]);
                     }
