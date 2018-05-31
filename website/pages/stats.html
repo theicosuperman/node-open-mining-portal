@@ -31,7 +31,7 @@
 <div id="topCharts">
 
     <div class="chartWrapper">
-        <div class="chartLabel">Workers Per Pool</div>
+        <div class="chartLabel">My Workers Per Pool</div>
         <div class="chartHolder"><svg id="poolWorkers"/></div>
     </div>
 
@@ -46,7 +46,26 @@
     </div>
 
 </div>
+<div id="Algos">
+{{ for(var algo in it.stats.algos) { }}
+                <div>
+                    <div><i class="fa fa-flask"></i>{{=algo}}</div>
+                    <div><i class="fa fa-users"></i><span id="statsMiners{{=algo}}">{{=it.stats.algos[algo].workers}}</span> Miners</div>
+                    <div><i class="fa fa-tachometer"></i><span id="statsHashrate{{=algo}}">{{=it.stats.algos[algo].hashrateString}}</span></div>
+                </div>
+                {{ } }}
 
+</div>
+<div id="Pools">
+{{ for(var pool in it.stats.pools) { }}
+                <div>
+                    <div><i class="fa fa-flask"></i>{{=pool}}</div>
+                  
+                    <div><i class="fa fa-tachometer"></i><span id="statsHashrate{{=algo}}">{{=it.stats.pools[pool].hashrateString}}</span></div>
+                </div>
+                {{ } }}
+
+</div>
 
 
 <script>

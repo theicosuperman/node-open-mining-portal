@@ -17,11 +17,92 @@ function rediscreateClient(port, host, pass) {
     }
     return client;
 }
-
-
-
-
-/**
+/* ADDENDUM FROM z-NOMP */
+ function readableSeconds(t) {
+        var seconds = Math.round(t);
+        var minutes = Math.floor(seconds/60);
+        var hours = Math.floor(minutes/60);
+        var days = Math.floor(hours/24);
+        hours = hours-(days*24);
+        minutes = minutes-(days*24*60)-(hours*60);
+        seconds = seconds-(days*24*60*60)-(hours*60*60)-(minutes*60);
+        if (days > 0) { return (days + "d " + hours + "h " + minutes + "m " + seconds + "s"); }
+        if (hours > 0) { return (hours + "h " + minutes + "m " + seconds + "s"); }
+        if (minutes > 0) {return (minutes + "m " + seconds + "s"); }
+        return (seconds + "s");
+    }
+function sortPoolsByName(objects) {
+		var newObject = {};
+		var sortedArray = sortProperties(objects, 'name', false, false);
+		for (var i = 0; i < sortedArray.length; i++) {
+			var key = sortedArray[i][0];
+			var value = sortedArray[i][1];
+			newObject[key] = value;
+		}
+		return newObject;
+    }
+    
+    function sortBlocks(a, b) {
+        var as = parseInt(a.split(":")[2]);
+        var bs = parseInt(b.split(":")[2]);
+        if (as > bs) return -1;
+        if (as < bs) return 1;
+        return 0;
+    }
+	
+	function sortWorkersByName(objects) {
+		var newObject = {};
+		var sortedArray = sortProperties(objects, 'name', false, false);
+		for (var i = 0; i < sortedArray.length; i++) {
+			var key = sortedArray[i][0];
+			var value = sortedArray[i][1];
+			newObject[key] = value;
+		}
+		return newObject;
+	}
+	/*
+	function sortMinersByHashrate(objects) {
+		var newObject = {};
+		var sortedArray = sortProperties(objects, 'shares', true, true);
+		for (var i = 0; i < sortedArray.length; i++) {
+			var key = sortedArray[i][0];
+			var value = sortedArray[i][1];
+			newObject[key] = value;
+		}
+		return newObject;
+	}
+	
+	function sortWorkersByHashrate(a, b) {
+		if (a.hashrate === b.hashrate) {
+			return 0;
+		}
+		else {
+			return (a.hashrate < b.hashrate) ? -1 : 1;
+		}
+	}
+	
+    this.getReadableHashRateString = function(hashrate){
+		hashrate = (hashrate * 2);
+		if (hashrate < 1000000) {
+			return (Math.round(hashrate / 1000) / 1000 ).toFixed(2)+' Sol/s';
+		}
+        var byteUnits = [ ' Sol/s', ' KSol/s', ' MSol/s', ' GSol/s', ' TSol/s', ' PSol/s' ];
+        var i = Math.floor((Math.log(hashrate/1000) / Math.log(1000)) - 1);
+        hashrate = (hashrate/1000) / Math.pow(1000, i + 1);
+        return hashrate.toFixed(2) + byteUnits[i];
+    };
+	
+	function getReadableNetworkHashRateString(hashrate) {
+		hashrate = (hashrate * 1000000);
+		if (hashrate < 1000000)
+			return '0 Sol';
+		var byteUnits = [ ' Sol/s', ' KSol/s', ' MSol/s', ' GSol/s', ' TSol/s', ' PSol/s' ];
+		var i = Math.floor((Math.log(hashrate/1000) / Math.log(1000)) - 1);
+		hashrate = (hashrate/1000) / Math.pow(1000, i + 1);
+		return hashrate.toFixed(2) + byteUnits[i];
+	}
+*/
+/*
  * Sort object properties (only own properties will be sorted).
  * @param {object} obj object to sort properties
  * @param {string|int} sortedBy 1 - sort object properties by specific value.
@@ -58,15 +139,10 @@ function sortProperties(obj, sortedBy, isNumericSort, reverse) {
 module.exports = function (portalConfig, poolConfigs) {
     logger.info("Starting stats module");
     var _this = this;
-
-
-
     var redisClients = [];
     var redisStats;
-
     this.statHistory = [];
     this.statPoolHistory = [];
-
     this.stats = {};
     this.statsString = '';
 
@@ -77,9 +153,6 @@ module.exports = function (portalConfig, poolConfigs) {
     logger.debug("Setting up statHistory");
     gatherStatHistory();
 
-		
-		
-		
 		
     Object.keys(poolConfigs).forEach(function (coin) {
 //* if (!canDoStats) return; Z-NOMP have this */
@@ -120,11 +193,13 @@ module.exports = function (portalConfig, poolConfigs) {
             if (_this.stats.pools[pool.name].confirmed && _this.stats.pools[pool.name].confirmed.blocks)
                 for (var i=0; i<_this.stats.pools[pool.name].confirmed.blocks.length; i++)
                     allBlocks[pool.name+"-"+_this.stats.pools[pool.name].confirmed.blocks[i].split(':')[2]] = _this.stats.pools[pool.name].confirmed.blocks[i];
-            
+            console.log(JSON.stringify(allBlocks));
             pcb();
         }, function(err) {
             cback(allBlocks);            
         });
+				
+				
     };
 /* END ADDENDUM */
 	
@@ -162,194 +237,9 @@ module.exports = function (portalConfig, poolConfigs) {
         }
         _this.statPoolHistory.push(data);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     this.getGlobalStats = function (callback) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        var statGatherTime = Date.now() / 1000 | 0;
+     var statGatherTime = Date.now() / 1000 | 0;
 
         var allCoinStats = {};
 
@@ -365,12 +255,6 @@ module.exports = function (portalConfig, poolConfigs) {
                 ['scard', ':blocksPending'],
                 ['scard', ':blocksConfirmed'],
                 ['scard', ':blocksOrphaned']
-
-
-
-
-
-
 
             ];
 
@@ -396,11 +280,6 @@ module.exports = function (portalConfig, poolConfigs) {
                     for (var i = 0; i < replies.length; i += commandsPerCoin) {
                         var coinName = client.coins[i / commandsPerCoin | 0];
 
-
-
-
-
-
                         var coinStats = {
                             name: coinName,
                             symbol: poolConfigs[coinName].coin.symbol.toUpperCase(),
@@ -411,48 +290,14 @@ module.exports = function (portalConfig, poolConfigs) {
                                 validBlocks: replies[i + 2] ? (replies[i + 2].validBlocks || 0) : 0,
                                 invalidShares: replies[i + 2] ? (replies[i + 2].invalidShares || 0) : 0,
                                 totalPaid: replies[i + 2] ? (replies[i + 2].totalPaid || 0) : 0
-
-
-
-
-
-
-
                             },
-
 
                             blocks: {
                                 pending: replies[i + 3],
                                 confirmed: replies[i + 4],
                                 orphaned: replies[i + 5]
-                            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                           }
                         };
-
-
-
-
-
-
-
-
-
-
-
                         allCoinStats[coinStats.name] = (coinStats);
                     }
 
@@ -505,30 +350,7 @@ module.exports = function (portalConfig, poolConfigs) {
                                 invalidshares: 0,
                                 hashrateString: null
 
-
-
-
-
-
-
-
                             };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                     }
                     else {
@@ -537,55 +359,18 @@ module.exports = function (portalConfig, poolConfigs) {
                             coinStats.workers[worker].invalidshares -= workerShares; // workerShares is negative number!
                         else
 
-
                             coinStats.workers[worker] = {
-
 
                                 shares: 0,
                                 invalidshares: -workerShares,
                                 hashrateString: null
-
-
-
-
-
-
-
-
                             };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                     }
                 });
 
-
-
-
                 var shareMultiplier = Math.pow(2, 32) / algos[coinStats.algorithm].multiplier;
                 coinStats.hashrate = shareMultiplier * coinStats.shares / portalConfig.website.stats.hashrateWindow;
-
-
-
-
-
-
-
-
 
                 coinStats.workerCount = Object.keys(coinStats.workers).length;
                 portalStats.global.workers += coinStats.workerCount;
@@ -601,63 +386,65 @@ module.exports = function (portalConfig, poolConfigs) {
                 }
                 portalStats.algos[algo].hashrate += coinStats.hashrate;
                 portalStats.algos[algo].workers += Object.keys(coinStats.workers).length;
-
-                for (var worker in coinStats.workers) {
-                    coinStats.workers[worker].hashrateString = _this.getReadableHashRateString(shareMultiplier * coinStats.workers[worker].shares / portalConfig.website.stats.hashrateWindow);
-
-
-
-
-
-
-
-
-
-
-
+								
+								//ADDENDUM
+								var _shareTotal = parseFloat(0);
+                var _maxTimeShare = parseFloat(0);
+								
+								for (var worker in coinStats.currentRoundShares) {
+                    var miner = worker.split(".")[0];
+                    if (miner in coinStats.miners) {
+                        coinStats.miners[miner].currRoundShares += parseFloat(coinStats.currentRoundShares[worker]);
+                    }
+                    if (worker in coinStats.workers) {
+                        coinStats.workers[worker].currRoundShares += parseFloat(coinStats.currentRoundShares[worker]);
+                    }
+                    _shareTotal += parseFloat(coinStats.currentRoundShares[worker]);
+                }
+                for (var worker in coinStats.currentRoundTimes) {
+                    var time = parseFloat(coinStats.currentRoundTimes[worker]);
+                    if (_maxTimeShare < time) { _maxTimeShare = time; }
+                    var miner = worker.split(".")[0];	// split poolId from minerAddress
+                    if (miner in coinStats.miners && coinStats.miners[miner].currRoundTime < time) {
+                        coinStats.miners[miner].currRoundTime = time;
+                    }
                 }
 
+                coinStats.shareCount = _shareTotal;
+                coinStats.maxRoundTime = _maxTimeShare;
+                coinStats.maxRoundTimeString = readableSeconds(_maxTimeShare);
+								
+                for (var worker in coinStats.workers) {
+                 var _workerRate = shareMultiplier * coinStats.workers[worker].shares / portalConfig.website.stats.hashrateWindow;
+									var _wHashRate = (_workerRate / 1000000) * 2;
+									coinStats.workers[worker].luckDays = ((_networkHashRate / _wHashRate * _blocktime) / (24 * 60 * 60)).toFixed(3);
+									coinStats.workers[worker].luckHours = ((_networkHashRate / _wHashRate * _blocktime) / (60 * 60)).toFixed(3);
+									coinStats.workers[worker].hashrate = _workerRate;
+									coinStats.workers[worker].hashrateString = _this.getReadableHashRateString(_workerRate);
+									var miner = worker.split('.')[0];
+										if (miner in coinStats.miners) {
+										coinStats.workers[worker].currRoundTime = coinStats.miners[miner].currRoundTime;
+										}
+                }
 
+					for (var miner in coinStats.miners) {
+					var _workerRate = shareMultiplier * coinStats.miners[miner].shares / portalConfig.website.stats.hashrateWindow;
+					var _wHashRate = (_workerRate / 1000000) * 2;
+					coinStats.miners[miner].luckDays = ((_networkHashRate / _wHashRate * _blocktime) / (24 * 60 * 60)).toFixed(3);
+					coinStats.miners[miner].luckHours = ((_networkHashRate / _wHashRate * _blocktime) / (60 * 60)).toFixed(3);
+					coinStats.miners[miner].hashrate = _workerRate;
+					coinStats.miners[miner].hashrateString = _this.getReadableHashRateString(_workerRate);
+                }
+				
+				// sort workers by name
+					coinStats.workers = sortWorkersByName(coinStats.workers);
 
+          delete coinStats.hashrates;
+          delete coinStats.shares;
+          coinStats.hashrateString = _this.getReadableHashRateString(coinStats.hashrate);
+          });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                delete coinStats.hashrates;
-                delete coinStats.shares;
-                coinStats.hashrateString = _this.getReadableHashRateString(coinStats.hashrate);
-            });
-
+						//////////////
             Object.keys(portalStats.algos).forEach(function (algo) {
                 var algoStats = portalStats.algos[algo];
                 algoStats.hashrateString = _this.getReadableHashRateString(algoStats.hashrate);
@@ -666,18 +453,7 @@ module.exports = function (portalConfig, poolConfigs) {
             _this.stats = portalStats;
 
 
-
-
-
-
-
-
-
-
-
             _this.statsString = JSON.stringify(portalStats);
-
-
             _this.statHistory.push(portalStats);
 
             addStatPoolHistory(portalStats);
