@@ -1,57 +1,55 @@
-[2018-05-31T10:31:34.219Z] [debug] [system] [init.js] : POSIX Connection Limit (Safe to ignore) POSIX module not installed and resource (connection) limit was not raised
-[2018-05-31T10:31:34.245Z] [info] [system] [CLI] : CLI listening on 127.0.0.1:17117
-[2018-05-31T10:31:34.488Z] [debug] [system] [init.js] : Master
-[2018-05-31T10:31:35.130Z] [info] [system] [Website] : Starting Website module
-[2018-05-31T10:31:35.133Z] [info] [system] [PaymentProcessing] : Payment processor worker started
-[2018-05-31T10:31:35.142Z] [info] [system] [Stats] : Starting stats module
-[2018-05-31T10:31:35.145Z] [info] [system] [PaymentProcessing] : Enabled x11coin for payment processing
-[2018-05-31T10:31:35.147Z] [debug] [system] [Stats] : Setting up statsRedis
-[2018-05-31T10:31:35.161Z] [debug] [system] [Stats] : Setting up statHistory
-[2018-05-31T10:31:35.167Z] [debug] [x11coin] [PaymentProcessor] : Validating address and balance
-[2018-05-31T10:31:35.247Z] [info] [system] [Website] : Website started on 172.24.99.224:8080
-[2018-05-31T10:31:35.282Z] [silly] [x11coin] [PaymentProcessor] : minimumPayment = 0.1
-[2018-05-31T10:31:35.284Z] [silly] [x11coin] [PaymentProcessor] : Validated RTCwSmBa1vtDj7Qdyjaa5p5f1B6NcVxV5p address with result {"error":null,"response":{"isvalid":true,"address":"RTCwSmBa1vtDj7Qdyjaa5p5f1B6NcVxV5p","ismine":true,"iswatchonly":false,"isscript":false,"pubkey":"03bd5b6513fa0259d1f3b4c807e400dcf150b817ef4f76edd4314b9da768b6663f","iscompressed":true,"account":"poolAddress"},"instance":{"host":"47.100.8.79","port":16666,"user":"x11coin","password":"debug123456","index":0}}
-[2018-05-31T10:31:35.288Z] [debug] [system] [PaymentProcessing] : Processing processor initialized. Setup results true
-[2018-05-31T10:31:35.289Z] [info] [system] [PaymentProcessing] : Payment processing setup to run every 900 second(s) with daemon (x11coin@47.100.8.79:16666) and redis (127.0.0.1:6379)
-[2018-05-31T10:31:35.390Z] [debug] [x11coin] [PaymentProcessor] : Calling redis for array of rounds
-[2018-05-31T10:31:35.393Z] [debug] [x11coin] [PaymentProcessor] : Redis responsed: [null,[]]
-[2018-05-31T10:31:35.395Z] [debug] [x11coin] [PaymentProcessor] : Prepared info basic info about payments
-[2018-05-31T10:31:35.396Z] [silly] [x11coin] [PaymentProcessor] : workers = {}
-[2018-05-31T10:31:35.396Z] [silly] [x11coin] [PaymentProcessor] : rounds = []
-[2018-05-31T10:31:35.396Z] [debug] [x11coin] [PaymentProcessor] : Workers count: 0 Rounds: %
-[2018-05-31T10:31:35.397Z] [debug] [x11coin] [PaymentProcessor] : Checking for confirmed rounds (blocks)
-[2018-05-31T10:31:35.401Z] [debug] [system] [SwitchingSetup[:1]] : Loading last proxy state from redis
-[2018-05-31T10:31:35.413Z] [debug] [x11coin] [ShareProcessor [:0]] : Share processing setup with redis (127.0.0.1:6379)
-[2018-05-31T10:31:35.485Z] [warn] [x11coin] [PaymentProcessor] : Could not decrypt address from tx (no tx.result or tx.address field) {"result":"poolAddress","error":null,"id":1527762695400}
-[2018-05-31T10:31:35.485Z] [silly] [x11coin] [PaymentProcessor] : Wokers and rounds after filtering orphans etc.
-[2018-05-31T10:31:35.485Z] [silly] [x11coin] [PaymentProcessor] : workers = {}
-[2018-05-31T10:31:35.485Z] [silly] [x11coin] [PaymentProcessor] : rounds = []
-[2018-05-31T10:31:35.486Z] [debug] [x11coin] [PaymentProcessor] : Getting all shares for rounds and calculating rewards for miners
-[2018-05-31T10:31:35.486Z] [silly] [x11coin] [PaymentProcessor] : Calling redis for []
-[2018-05-31T10:31:35.489Z] [silly] [x11coin] [PaymentProcessor] : Response from redis allWorkerShares = []
-[2018-05-31T10:31:35.491Z] [silly] [x11coin] [PaymentProcessor] : allWorkerShares before merging []
-[2018-05-31T10:31:35.491Z] [debug] [x11coin] [PaymentProcessor] : Mapping workers into payout addresses
-[2018-05-31T10:31:35.492Z] [debug] [x11coin] [PaymentProcessor] : Merged workers into payout addresses
-[2018-05-31T10:31:35.492Z] [silly] [x11coin] [PaymentProcessor] : allWorkerShares after merging []
-[2018-05-31T10:31:35.493Z] [debug] [x11coin] [PaymentProcessor] : Almost ready to send funds, calculating against existing balances
-[2018-05-31T10:31:35.493Z] [debug] [x11coin] [PaymentProcessor] : Trying to send
-[2018-05-31T10:31:35.495Z] [silly] [x11coin] [PaymentProcessor] : withholdPercent = 0
-[2018-05-31T10:31:35.495Z] [silly] [x11coin] [PaymentProcessor] : totalSent = 0
-[2018-05-31T10:31:35.496Z] [info] [x11coin] [PaymentProcessor] : No workers was chosen for paying out
-[2018-05-31T10:31:35.496Z] [silly] [x11coin] [PaymentProcessor] : finalRedisCommands 
-[2018-05-31T10:31:35.497Z] [silly] [x11coin] [PaymentProcessor] : Nothing to write to redis
-[2018-05-31T10:31:35.499Z] [debug] [x11coin] [PaymentProcessor] : Finished interval - time spent: 109 ms total, 7 ms redis, 94 ms daemon RPC
-[2018-05-31T10:31:35.753Z] [info] [x11coin] [Pool [:1]] : Stratum Pool Server Started for x11coin [XC] {x11}
+[2018-05-31T13:49:27.896Z] [debug] [system] [init.js] : POSIX Connection Limit (Safe to ignore) POSIX module not installed and resource (connection) limit was not raised
+[2018-05-31T13:49:27.922Z] [info] [system] [CLI] : CLI listening on 127.0.0.1:17117
+[2018-05-31T13:49:28.169Z] [debug] [system] [init.js] : Master
+[2018-05-31T13:49:28.872Z] [info] [system] [PaymentProcessing] : Payment processor worker started
+[2018-05-31T13:49:28.876Z] [info] [system] [PaymentProcessing] : Enabled x11coin for payment processing
+[2018-05-31T13:49:28.865Z] [info] [system] [Website] : Starting Website module
+[2018-05-31T13:49:28.884Z] [info] [system] [Stats] : Starting stats module
+[2018-05-31T13:49:28.887Z] [debug] [system] [Stats] : Setting up statsRedis
+[2018-05-31T13:49:28.898Z] [debug] [system] [Stats] : Setting up statHistory
+[2018-05-31T13:49:28.906Z] [debug] [x11coin] [PaymentProcessor] : Validating address and balance
+[2018-05-31T13:49:28.987Z] [info] [system] [Website] : Website started on 172.24.99.224:8080
+[2018-05-31T13:49:28.997Z] [silly] [x11coin] [PaymentProcessor] : Validated RTCwSmBa1vtDj7Qdyjaa5p5f1B6NcVxV5p address with result {"error":null,"response":{"isvalid":true,"address":"RTCwSmBa1vtDj7Qdyjaa5p5f1B6NcVxV5p","ismine":true,"iswatchonly":false,"isscript":false,"pubkey":"03bd5b6513fa0259d1f3b4c807e400dcf150b817ef4f76edd4314b9da768b6663f","iscompressed":true,"account":"poolAddress"},"instance":{"host":"47.100.8.79","port":16666,"user":"x11coin","password":"debug123456","index":0}}
+[2018-05-31T13:49:29.017Z] [silly] [x11coin] [PaymentProcessor] : minimumPayment = 0.1
+[2018-05-31T13:49:29.024Z] [debug] [system] [PaymentProcessing] : Processing processor initialized. Setup results true
+[2018-05-31T13:49:29.027Z] [info] [system] [PaymentProcessing] : Payment processing setup to run every 900 second(s) with daemon (x11coin@47.100.8.79:16666) and redis (127.0.0.1:6379)
+[2018-05-31T13:49:29.125Z] [debug] [x11coin] [PaymentProcessor] : Calling redis for array of rounds
+[2018-05-31T13:49:29.128Z] [debug] [x11coin] [PaymentProcessor] : Redis responsed: [null,[]]
+[2018-05-31T13:49:29.131Z] [debug] [x11coin] [PaymentProcessor] : Prepared info basic info about payments
+[2018-05-31T13:49:29.131Z] [silly] [x11coin] [PaymentProcessor] : workers = {}
+[2018-05-31T13:49:29.132Z] [silly] [x11coin] [PaymentProcessor] : rounds = []
+[2018-05-31T13:49:29.132Z] [debug] [x11coin] [PaymentProcessor] : Workers count: 0 Rounds: %
+[2018-05-31T13:49:29.135Z] [debug] [x11coin] [PaymentProcessor] : Checking for confirmed rounds (blocks)
+[2018-05-31T13:49:29.166Z] [debug] [system] [SwitchingSetup[:1]] : Loading last proxy state from redis
+[2018-05-31T13:49:29.180Z] [debug] [x11coin] [ShareProcessor [:0]] : Share processing setup with redis (127.0.0.1:6379)
+[2018-05-31T13:49:29.216Z] [warn] [x11coin] [PaymentProcessor] : Could not decrypt address from tx (no tx.result or tx.address field) {"result":"poolAddress","error":null,"id":1527774569139}
+[2018-05-31T13:49:29.217Z] [silly] [x11coin] [PaymentProcessor] : Wokers and rounds after filtering orphans etc.
+[2018-05-31T13:49:29.217Z] [silly] [x11coin] [PaymentProcessor] : workers = {}
+[2018-05-31T13:49:29.218Z] [silly] [x11coin] [PaymentProcessor] : rounds = []
+[2018-05-31T13:49:29.219Z] [debug] [x11coin] [PaymentProcessor] : Getting all shares for rounds and calculating rewards for miners
+[2018-05-31T13:49:29.219Z] [silly] [x11coin] [PaymentProcessor] : Calling redis for []
+[2018-05-31T13:49:29.221Z] [silly] [x11coin] [PaymentProcessor] : Response from redis allWorkerShares = []
+[2018-05-31T13:49:29.221Z] [silly] [x11coin] [PaymentProcessor] : allWorkerShares before merging []
+[2018-05-31T13:49:29.221Z] [debug] [x11coin] [PaymentProcessor] : Mapping workers into payout addresses
+[2018-05-31T13:49:29.222Z] [debug] [x11coin] [PaymentProcessor] : Merged workers into payout addresses
+[2018-05-31T13:49:29.222Z] [silly] [x11coin] [PaymentProcessor] : allWorkerShares after merging []
+[2018-05-31T13:49:29.223Z] [debug] [x11coin] [PaymentProcessor] : Almost ready to send funds, calculating against existing balances
+[2018-05-31T13:49:29.224Z] [debug] [x11coin] [PaymentProcessor] : Trying to send
+[2018-05-31T13:49:29.224Z] [silly] [x11coin] [PaymentProcessor] : withholdPercent = 0
+[2018-05-31T13:49:29.224Z] [silly] [x11coin] [PaymentProcessor] : totalSent = 0
+[2018-05-31T13:49:29.225Z] [info] [x11coin] [PaymentProcessor] : No workers was chosen for paying out
+[2018-05-31T13:49:29.225Z] [silly] [x11coin] [PaymentProcessor] : finalRedisCommands 
+[2018-05-31T13:49:29.226Z] [silly] [x11coin] [PaymentProcessor] : Nothing to write to redis
+[2018-05-31T13:49:29.226Z] [debug] [x11coin] [PaymentProcessor] : Finished interval - time spent: 101 ms total, 7 ms redis, 90 ms daemon RPC
+[2018-05-31T13:49:29.538Z] [info] [x11coin] [Pool [:1]] : Stratum Pool Server Started for x11coin [XC] {x11}
 						Network Connected:	Mainnet
 						Detected Reward Type:	POW
-						Current Block Height:	138385
-						Current Connect Peers:	22
-						Current Block Diff:	12982.672526888
-						Network Difficulty:	12639.5361964
-						Network Hash Rate:	346.69 GH
+						Current Block Height:	138477
+						Current Connect Peers:	23
+						Current Block Diff:	8766.572691757
+						Network Difficulty:	9249.33672448
+						Network Hash Rate:	319.43 GH
 						Stratum Port(s):	7100
 						Pool Fee Percent:	00.51.5%
 						Block polling every:	500 ms
-[2018-05-31T10:31:35.755Z] [debug] [system] [PoolWorker] : [x11] Setting proxy difficulties after pool start
-{"x11coin-137099":"0000000000055445ccb7f2eed4f9cfe642b30e9650274ba4c14c2b9b3f3a1be0:e52a9d4f5350e3eefbe427619ff8d722e53ebf41a032c689fef40ec8c9f7fbb7:137099","x11coin-137098":"000000000003b63f0e42a2b52ac53112c4df53347e8ed0dbdc23f4462e34b195:f7b012ad1568df0070737e7237ecd6ce4351b96a2efd6ca4af42e40965fc588a:137098","x11coin-137096":"0000000000002d806b931a3ef605c683dc396310018144bc0015001617f33936:d58f02e139812f8d66765cf32a6934de77c34909fbfc0d3f950bded1ac3f8c79:137096","x11coin-136209":"000000000001c5efe4b6bfcf197793751a7e7485825b5c6fb7c1cb26f7a55c19:9fb1abca3c0a043e5a148f53c030d5b00fb560eee3d853086efc0879743916fa:136209","x11coin-136206":"0000000000009ab5b5e24897ed04497174608e35481253bd7bb1a26591962cc6:9fb9cb1051aa13f8818b099109e47b73b6f3cbd25ff3f4f9332f13ae52eba07e:136206","x11coin-136205":"0000000000028c083189844af197f562b17768a6afe42c4636024b0c1c56be7e:0fd609e71075893d614a14ddc6a396e968056d58b25354642b5f526aac699e10:136205","x11coin-136203":"000000000000c1f6875fffbabe23dd5a937a802fb342ccbf8217b68aea5a0588:10c96289fb29e4a0477a3fbe481562e4279067490551a8c11409290b40002404:136203","x11coin-136202":"000000000004c94fef037d3acc2586c3967845914240260b75b963e36210d3ba:0c9f099500d593032d13aedcfbc5ec3f58ffa656af331009d80a98eb3516681c:136202","x11coin-136200":"000000000002d6cc1ff27543b17284cec3cb8da2ea54e5204098fe525c17dd3e:82d6d7c93ed2fcd5258a0e9c06d7149891cf87a310c2c353b7e0708b5e6005f1:136200","x11coin-136199":"000000000004b15d85d0bf2071321aab0744d33819792279a7764529f423779b:1a14fcfc7825c7675abb38d3593afeca6bcf7dcd2e68f5d2e49993a8069cf7d7:136199","x11coin-136197":"000000000005619755a99f117744416cd22f266f9286d00c086fbe1b7cd602e2:b61f9ddd02ee595e5f247b61351ffa455516ed70cf24841ce52f7f921ffa9757:136197","x11coin-136195":"0000000000040cd5c6d55e79c8e2fdc817466dfe42cfb8cf0be3798cc9181979:1c3ec622f2849477578e64d342b08df7a6e095019301ee72e627eb86d894f79e:136195","x11coin-136193":"000000000003f6db26f1595ef8c377e9c265f577e9468a2bcc3aa7aba95111bb:57b46cf9179068182d6e928e63d99d5a1ecd2b19707de075984da049c7fd4619:136193"}
-[2018-05-31T10:31:46.848Z] [info] [x11coin] [Pool [:1]] : Block notification via RPC polling
+[2018-05-31T13:49:29.540Z] [debug] [system] [PoolWorker] : [x11] Setting proxy difficulties after pool start
